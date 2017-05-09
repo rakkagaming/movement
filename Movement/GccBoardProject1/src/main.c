@@ -22,21 +22,21 @@ static void configure_console(void)
 /* Enables feedback through the USB-cable back to terminal within Atmel Studio */
 {
 	//Use this for normal serial print into console
-	/*const usart_serial_options_t uart_serial_options = {
+	const usart_serial_options_t uart_serial_options = {
 		.baudrate = CONF_UART_BAUDRATE,
 		.paritytype = CONF_UART_PARITY
-	};*/
+	};
 
 	 //Configure console UART. 
-	 /*
+	 
 	sysclk_enable_peripheral_clock(CONSOLE_UART_ID);
 	stdio_serial_init(CONF_UART, &uart_serial_options);
 	
 	printf("Console ready\n");
-	printf("=============\n");*/
+	printf("=============\n");
 	
 	//THis is for navigation
-	
+	/*
 	const usart_serial_options_t uart_serial_options = {
 		.baudrate = CONF_UART_BAUDRATE,
 		.paritytype = CONF_UART_PARITY,
@@ -45,7 +45,7 @@ static void configure_console(void)
 	};
 	sysclk_enable_peripheral_clock(BOARD_USART1_BASE);
 	usart_serial_init(CONF_UART, &uart_serial_options);
-	
+	*/
 }
 
 void USART1_Handler(){
@@ -99,8 +99,8 @@ int main (void)
 	configure_console();
 	
 	//used for navigation
-	NVIC_EnableIRQ((IRQn_Type) ID_USART1);
-	usart_enable_interrupt(CONF_UART, UART_IER_RXRDY);
+	//NVIC_EnableIRQ((IRQn_Type) ID_USART1);
+	//usart_enable_interrupt(CONF_UART, UART_IER_RXRDY);
 	
 	//Makes pin 24 on the Due-board an output
 	ioport_set_pin_dir(pin24,IOPORT_DIR_OUTPUT);
@@ -135,32 +135,24 @@ int main (void)
 		valuesCalc(foo);
 		degreesToPos = angleToPos();
 		rotationChooser(degreesToPos);
-		/*if (degreesToPos<0){
-			degreesToPos = abs(degreesToPos);
-			rotateRightByDegrees(degreesToPos);
-			updateAngle();
-		} else{
-			rotateLeftByDegrees(degreesToPos);
-			updateAngle();
-		}*/
-		//callForData(x_coordinate(),y_coordinate());
-		x1_pos = x_coordinate();
-		y1_pos = y_coordinate();
-		while (distanceToPosition(foo)>30.0){
-			/*delay_ms(500);
+		//x1_pos = x_coordinate();
+		//y1_pos = y_coordinate();
+		while (distanceToPosition(foo)>60.0){
+			delay_ms(500);
 			int ek = counterA-counterB;
 			tempVariabel = counterA*1.355;
 			reglerahjul3(ek);
 			updatePos(tempVariabel);
-			tempVariabel = 0;*/
+			tempVariabel = 0;
 			
+			/*
 			delay_ms(500);
 			int ek = counterA-counterB;
 			reglerahjul3(ek);
 			x1_pos = x_coordinate();
 			y1_pos = y_coordinate();
 			angleCheck();
-			
+			*/
 		}
 		delay_ms(8);
 		foo++;
