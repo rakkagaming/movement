@@ -34,6 +34,8 @@ void turnLeft(void);
 void turnRight(void);
 void rotateLeftByDegrees(int degree);
 void rotateRightByDegrees(int degree);
+void rotateRight(int degree);
+void rotateLeft(int degree);
 
 
 

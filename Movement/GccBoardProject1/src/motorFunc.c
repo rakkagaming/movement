@@ -21,6 +21,7 @@ void pulse(uint16_t motorSpeed){
 };
 
 //Sets both engines to go the same direction with the "same" speed
+//@Depricated
 void forwardDrive(){
 	pulse(baseSpeed);
 	delay_us(motorSwitch);
@@ -29,6 +30,7 @@ void forwardDrive(){
 }
 
 //Sets both engines to go the same direction with the "same" speed (reverse)
+//@Depricated
 void reverseDrive(){
 	pulse(reverseBaseSpeed);
 	delay_us(motorSwitch);
@@ -37,6 +39,7 @@ void reverseDrive(){
 }
 
 //Rotates the platform by setting the directions of the engines the opposite of each other
+//@Depricated
 void rotate(){
 	pulse(baseSpeed);
 	delay_us(motorSwitch);
@@ -52,6 +55,7 @@ void stop(){
 	delay_ms(timeOut);
 }
 
+//@Depricated
 void turnLeft(){
 	pulse(baseSpeed);
 	delay_us(motorSwitch);
@@ -59,12 +63,25 @@ void turnLeft(){
 	delay_ms(timeOut);
 }
 
+//@Depricated
 void turnRight(){
 	pulse(baseSpeed+100);
 	delay_us(motorSwitch);
 	pulse(baseSpeed);
 	delay_ms(timeOut);
 }
+
+void rotateRight(int degree){
+	while(degree>45)
+	{
+		printf("degrees left: %d\n",degree);
+		degree = degree-45;
+		rotateRightByDegrees(45);
+	}
+	printf("degrees to turn the final time: %d\n",degree);
+	rotateRightByDegrees(degree);
+}
+
 
 void rotateRightByDegrees(int degree){
 	stop();
@@ -85,6 +102,17 @@ void rotateRightByDegrees(int degree){
 	stop();
 	counterA = 0;
 	counterB = 0;
+}
+
+void rotateLeft(int degree){
+	while(degree>45)
+	{
+		printf("degrees left: %d\n",degree);
+		degree = degree-45;
+		rotateLeftByDegrees(45);
+	}
+	printf("degrees to turn the final time: %d\n",degree);
+	rotateLeftByDegrees(degree);
 }
 
 void rotateLeftByDegrees(int degree){

@@ -9,18 +9,19 @@
 #ifndef NAVIGATION_H_
 #define NAVIGATION_H_
 #include <inttypes.h>
+#include <asf.h>
 #include <math.h>
 #include <stdio_serial.h>
 #include "motorFunc.h"
 
-#define sock_x 133
-#define sock_y 186
-#define glass_x 23
-#define glass_y 382
-#define cube_x 472
-#define cube_y 23
-#define dropOff_x 478
-#define dropOff_y 371
+#define sock_x 136
+#define sock_y 200
+#define glass_x 56
+#define glass_y 362
+#define cube_x 434
+#define cube_y 35
+#define dropOff_x 451
+#define dropOff_y 350
 #define PI 3.141592
 
 extern uint16_t x1_pos;

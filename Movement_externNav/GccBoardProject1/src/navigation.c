@@ -99,6 +99,12 @@ double distanceToPosition(uint8_t obj){
 	//Calculates the hypotenuse 
 	distanceLeft = sqrt(pow(deltaX,2)+pow(deltaY,2));
 	//Returns the distance/hypotenuse
+	if (distanceLeft>60)
+	{
+		ioport_set_pin_level(PIO_PD1_IDX, HIGH);
+	}else{
+		ioport_set_pin_level(PIO_PD1_IDX, LOW);
+	}
 	return distanceLeft;
 }
 /*
@@ -112,10 +118,10 @@ int angleToPos(){
 	objectAngle = 180 - angle;
 	
 	//Calculates the angle-difference between the platform and the objective
-	angleVal = ((abs(platformAngle-360) + objectAngle)%360) - 360;
+	angleVal = abs(((abs(platformAngle-360) + objectAngle)%360) - 360);
 	
 	//If the angle-difference is greater than 180, make it negative
-	//(angleVal > 180) ? (angleVal -= 360) : (0);
+	(angleVal > 180) ? (angleVal -= 360) : (0);
 	
 	return angleVal;
 }
@@ -166,7 +172,8 @@ void updatePos(double hyp){
 	Checks if the angle that the platform actually travels in is the same as the believed one.
 	If they differ to much, the platform will stop and recalibrate to fix this.
 	
-	Still not tested! 
+	Didn't work in the first practical test, but that might be a consequence of other factors
+	Will now only be called once half of the distance to a destination has been traveled
 */
 void angleCheck(){
 	//Saves the last position
@@ -187,13 +194,12 @@ void angleCheck(){
 	
 	//If the angle-difference of the current travel-angle and the angle to the object is bigger than 4
 	//then fix the positioning so that the angle is equal.
-	if (abs(angleTemp-currentAngle)>4)
+	if (angleTemp!=currentAngle)
 	{
 		//Stops the movement
 		stop();
 		//Sets currentAngle to the actual angle of the platform
 		currentAngle = angleTemp;
-		
 		//Rotates the platform the needed amount in the correct direction.
 		rotationChooser(angleToPos());
 		
@@ -206,15 +212,15 @@ void angleCheck(){
 */
 void rotationChooser(int degreesToPos){
 	//If the value is negative rotate right, else left
-	if (degreesToPos>0){
-		
+	if (degreesToPos<0){
+		degreesToPos = abs(degreesToPos);
 		//Rotates the platform clockwise by the input value
 		rotateRightByDegrees(degreesToPos);
 		//Update the angle
 		updateAngle();
 	} else{
 		//Makes the value into a positive value
-		degreesToPos = abs(degreesToPos);
+		
 		//Rotates the platform anti-clockwise by the input value
 		rotateLeftByDegrees(degreesToPos);
 		//Update the angle

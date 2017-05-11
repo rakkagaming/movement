@@ -490,10 +490,19 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\consoleFunctions.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\consoleFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="test\navigationTest.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="test\navigationTest.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="test\testRunner.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="unity\unity.c">

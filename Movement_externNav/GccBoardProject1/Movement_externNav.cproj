@@ -13,7 +13,7 @@
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AssemblyName>GccBoardProject1</AssemblyName>
-    <Name>GccBoardProject1</Name>
+    <Name>Movement_externNav</Name>
     <RootNamespace>GccBoardProject1</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>

@@ -6,6 +6,9 @@
  *
  *	Contains the navigation functions used by the platform.
  *	The functions use angles, positions and distances to calculate what should be done.
+ *
+ *	@TODO	Clean up code, remove variables that aren't needed or those that are just duplicates
+ *			Also move variables to the .h file?
  */ 
 #include "navigation.h"
 
@@ -23,6 +26,8 @@ uint8_t temp;
 
 double distanceLeft;
 
+static int currentAngle = 90;
+
 //Calculation variables
 int deltaX;
 int deltaY;
@@ -34,7 +39,7 @@ int platformAngle;
 int objectAngle;
 int angleVal;
 int angleTemp;
-int currentAngle = 90;
+
 
 //Variables for the former position of the platform
 uint16_t last_x;
@@ -75,6 +80,12 @@ object_pos_t objects[] = {
 	}
 };
 
+void initNav(){
+	currentAngle = 90;
+	x1_pos = 0;
+	y1_pos = 0;
+}
+
 /*
 	Calculates the midpoint of the platform with the help of two sets of coordinates.
 	In the case that only one set is given, that will be used as the midpoint.
@@ -87,13 +98,13 @@ void calcMidPos(){
 	//Use this part if only 1 set of coordinates are given.
 	mid_x = x1_pos;
 	mid_y = y1_pos;
-	
 }
 
 /*
 	Calculates the distance from the platform to a given object
 */
 double distanceToPosition(uint8_t obj){
+	
 	//Call that calculates angle of the object and X/Y differences
 	valuesCalc(obj);
 	//Calculates the hypotenuse 
@@ -110,13 +121,11 @@ int angleToPos(){
 	platformAngle = currentAngle;
 	//Transforms the angle to the objective to a usable value(0-360)
 	objectAngle = 180 - angle;
-	
 	//Calculates the angle-difference between the platform and the objective
-	angleVal = ((abs(platformAngle-360) + objectAngle)%360) - 360;
-	
+	angleVal = abs(((abs(platformAngle-360) + objectAngle)%360) - 360);
 	//If the angle-difference is greater than 180, make it negative
-	//(angleVal > 180) ? (angleVal -= 360) : (0);
-	
+	(angleVal > 180) ? (angleVal -= 360) : (0);
+	//Negative value = turn right, positive = turn left
 	return angleVal;
 }
 
@@ -144,7 +153,7 @@ void valuesCalc(uint8_t obj){
 	to calculated values.
 */
 void updateAngle(){
-	currentAngle = ((currentAngle + angleVal)+360)%360;
+	currentAngle = ((currentAngle - angleVal)+360)%360;
 }
 /*
 	Updates the position of the platform by calculating the distance traveled along with 
@@ -206,17 +215,18 @@ void angleCheck(){
 */
 void rotationChooser(int degreesToPos){
 	//If the value is negative rotate right, else left
-	if (degreesToPos>0){
-		
+	if (degreesToPos<0){
+		degreesToPos = abs(degreesToPos);
 		//Rotates the platform clockwise by the input value
 		rotateRightByDegrees(degreesToPos);
+		//rotateRight(degreesToPos);
 		//Update the angle
 		updateAngle();
 	} else{
 		//Makes the value into a positive value
-		degreesToPos = abs(degreesToPos);
 		//Rotates the platform anti-clockwise by the input value
 		rotateLeftByDegrees(degreesToPos);
+		//rotateLeft(degreesToPos);
 		//Update the angle
 		updateAngle();
 	}

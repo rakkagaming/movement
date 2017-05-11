@@ -49,6 +49,7 @@ static void configure_console(void)
 }
 
 void USART1_Handler(){
+	
 	CONF_UART->US_CR |= (1 << US_CR_RSTRX);
 	rx[c_counter++] = CONF_UART->US_RHR & US_RHR_RXCHR_Msk;
 	if (c_counter > 15)
@@ -88,7 +89,7 @@ uint16_t y_coordinate(){
 			uint16_t x2 = 0;
 			
 			stringToInt(&x2, str2);
-			
+		
 			return x2;
 }
 
@@ -104,6 +105,8 @@ int main (void)
 	
 	//Makes pin 24 on the Due-board an output
 	ioport_set_pin_dir(pin24,IOPORT_DIR_OUTPUT);
+	
+	ioport_set_pin_dir(PIO_PD1_IDX,IOPORT_DIR_OUTPUT);
 	
 	
 	ioport_set_pin_dir(trig,IOPORT_DIR_OUTPUT);
@@ -121,40 +124,28 @@ int main (void)
 		DO NOT go: forwardDrive into reverseDrive	
 		This is to ensure that the motors don't get damaged.
 	*/
-	
-	/*
-	pulse(reverseBaseSpeed);
-	delay_us(1100);
-	pulse(baseSpeedLeft);
-	*/
 	uint8_t foo = 0;
 	int degreesToPos;
-	double tempVariabel = 0;
+	double totalLength = 0;
 	while(foo<4){
 		
 		valuesCalc(foo);
 		degreesToPos = angleToPos();
-		rotationChooser(degreesToPos);
+		rotationChooser(angleToPos());
 		x1_pos = x_coordinate();
 		y1_pos = y_coordinate();
+		totalLength = distanceToPosition(foo);
+		//Runs from start until half of the distance has been covered
 		while (distanceToPosition(foo)>60.0){
-			/*Dead Reckoning
-			delay_ms(500);
-			int ek = counterA-counterB;
-			tempVariabel = counterA*1.355;
-			reglerahjul3(ek);
-			updatePos(tempVariabel);
-			tempVariabel = 0;*/
-			
+			if (distanceToPosition(foo)<(totalLength/2)){
+				angleCheck();
+			}
 			delay_ms(500);
 			int ek = counterA-counterB;
 			reglerahjul3(ek);
 			x1_pos = x_coordinate();
 			y1_pos = y_coordinate();
-			angleCheck();
-			
 		}
-		delay_ms(8);
 		foo++;
 		stop();
 	} 
