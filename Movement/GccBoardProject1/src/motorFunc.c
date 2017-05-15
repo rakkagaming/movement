@@ -13,6 +13,8 @@
 #include "motorFunc.h"
 #include "pulseCounterHandler.h"
 
+double distanceToMove;
+
 //Sends the pulse to the engine
 void pulse(uint16_t motorSpeed){
 	ioport_set_pin_level(pin24, HIGH);
@@ -21,21 +23,45 @@ void pulse(uint16_t motorSpeed){
 };
 
 //Sets both engines to go the same direction with the "same" speed
-//@Depricated
-void forwardDrive(){
+void forwardDrive(int distance){
+	stop();
+	distanceToMove = distance/1.355;
+	counterA = 0;
+	counterB = 0;
+	
 	pulse(baseSpeed);
 	delay_us(motorSwitch);
 	pulse(baseSpeedLeft);
-	delay_ms(100);
+	
+	while (counterA<distanceToMove)
+	{
+		delay_ms(1);
+	}
+	stop();
+	counterA = 0;
+	counterB = 0;
 }
 
 //Sets both engines to go the same direction with the "same" speed (reverse)
 //@Depricated
-void reverseDrive(){
+void reverseDrive(int distance){
+	stop();
+	distanceToMove = distance/1.355;
+	counterA = 0;
+	counterB = 0;
+	
 	pulse(reverseBaseSpeed);
 	delay_us(motorSwitch);
 	pulse(reverseBaseSpeed);
-	delay_ms(timeOut);
+	
+	while (counterA<distanceToMove)
+	{
+		delay_ms(1);
+	}
+	
+	stop();
+	counterA = 0;
+	counterB = 0;
 }
 
 //Rotates the platform by setting the directions of the engines the opposite of each other
@@ -78,6 +104,10 @@ void rotateRight(int degree){
 		degree = degree-45;
 		rotateRightByDegrees(45);
 	}
+	if (degree<8)
+	{
+		degree += (8-degree);
+	}
 	printf("degrees to turn the final time: %d\n",degree);
 	rotateRightByDegrees(degree);
 }
@@ -85,15 +115,20 @@ void rotateRight(int degree){
 
 void rotateRightByDegrees(int degree){
 	stop();
-	degree=degree*1.1;
+	degree=degree*1.07;
 	degree=(degree/4)-1;
-	
-	pulse(reverseBaseSpeed);
-	delay_us(motorSwitch);
-	pulse(baseSpeedLeft);
+	degree =max(degree,0);
 	
 	counterA = 0;
 	counterB = 0;
+	
+	if (degree>0)
+	{
+	pulse(reverseBaseSpeed);
+	delay_us(motorSwitch);
+	pulse(baseSpeedLeft);
+	}
+	
 	
 	while((counterA<degree)){
 		delay_ms(1);
@@ -111,22 +146,31 @@ void rotateLeft(int degree){
 		degree = degree-45;
 		rotateLeftByDegrees(45);
 	}
+	
+	if (degree<8)
+	{
+		degree += (8-degree);
+	}
 	printf("degrees to turn the final time: %d\n",degree);
 	rotateLeftByDegrees(degree);
 }
 
 void rotateLeftByDegrees(int degree){
-	
 	stop();
-	degree = degree*1.05;
+	degree = degree*1.07;
 	degree=(degree/4)-1;
-	
-	pulse(baseSpeed);
-	delay_us(motorSwitch);
-	pulse(reverseBaseSpeed);
+	degree =max(degree,0);
 	
 	counterA = 0;
 	counterB = 0;
+	
+	if (degree>0)
+	{
+		pulse(baseSpeed);
+		delay_us(motorSwitch);
+		pulse(reverseBaseSpeed);
+	}
+	
 	
 	while((counterA<degree)){
 		delay_ms(1);

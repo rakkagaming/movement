@@ -13,14 +13,14 @@
 #include <stdio_serial.h>
 #include "motorFunc.h"
 
-#define sock_x 200
-#define sock_y 0
-#define glass_x 0
-#define glass_y 400
-#define cube_x 300
-#define cube_y 400
-#define dropOff_x 400
-#define dropOff_y 300
+#define sock_x 136
+#define sock_y 200
+#define glass_x 56
+#define glass_y 362
+#define cube_x 434
+#define cube_y 35
+#define dropOff_x 451
+#define dropOff_y 350
 #define PI 3.141592
 
 extern uint16_t x1_pos;

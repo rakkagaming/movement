@@ -14,6 +14,8 @@
 #include "Hjulreglering.h"
 #include "navigation.h"
 
+
+
 //Cancer from Gustaf
 uint8_t c_counter = 0;
 char rx[16];
@@ -49,7 +51,6 @@ static void configure_console(void)
 }
 
 void USART1_Handler(){
-	
 	CONF_UART->US_CR |= (1 << US_CR_RSTRX);
 	rx[c_counter++] = CONF_UART->US_RHR & US_RHR_RXCHR_Msk;
 	if (c_counter > 15)
@@ -131,14 +132,16 @@ int main (void)
 		
 		valuesCalc(foo);
 		degreesToPos = angleToPos();
-		rotationChooser(angleToPos());
+		rotationChooser(degreesToPos);
 		x1_pos = x_coordinate();
 		y1_pos = y_coordinate();
 		totalLength = distanceToPosition(foo);
 		//Runs from start until half of the distance has been covered
 		while (distanceToPosition(foo)>60.0){
+			
 			if (distanceToPosition(foo)<(totalLength/2)){
 				angleCheck();
+				totalLength = 0;
 			}
 			delay_ms(500);
 			int ek = counterA-counterB;
@@ -147,6 +150,7 @@ int main (void)
 			y1_pos = y_coordinate();
 		}
 		foo++;
+		delay_ms(10);
 		stop();
 	} 
 	

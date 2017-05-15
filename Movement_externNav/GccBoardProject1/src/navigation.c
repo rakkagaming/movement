@@ -150,7 +150,7 @@ void valuesCalc(uint8_t obj){
 	to calculated values.
 */
 void updateAngle(){
-	currentAngle = ((currentAngle + angleVal)+360)%360;
+	currentAngle = ((currentAngle - angleVal)+360)%360;
 }
 /*
 	Updates the position of the platform by calculating the distance traveled along with 
@@ -215,14 +215,14 @@ void rotationChooser(int degreesToPos){
 	if (degreesToPos<0){
 		degreesToPos = abs(degreesToPos);
 		//Rotates the platform clockwise by the input value
-		rotateRightByDegrees(degreesToPos);
+		rotateRight(degreesToPos);
 		//Update the angle
 		updateAngle();
 	} else{
 		//Makes the value into a positive value
 		
 		//Rotates the platform anti-clockwise by the input value
-		rotateLeftByDegrees(degreesToPos);
+		rotateLeft(degreesToPos);
 		//Update the angle
 		updateAngle();
 	}

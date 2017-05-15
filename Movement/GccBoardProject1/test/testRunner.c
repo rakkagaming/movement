@@ -17,7 +17,7 @@
 void setUp(void);
 void tearDown(void);
 void resetTest(void);
-
+/*
 int main(void){
 	sysclk_init();
 	board_init();
@@ -35,10 +35,10 @@ int main(void){
 	RUN_TEST(test_AngleToPos2, 26);
 	RUN_TEST(test_distanceToPosition3,28);
 	RUN_TEST(test_AngleToPos3, 30);
-	UnityEnd();*/
+	UnityEnd();
 	
 	return 0;
-}
+}*/
 
 void setUp(void)
 {

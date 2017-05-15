@@ -165,6 +165,12 @@ void updateAngle(){
 */
 void updatePos(double hyp){
 	angleRad = currentAngle * PI / 180;
+	
+	//Testing
+	last_x = mid_x;
+	last_y = mid_y;
+	
+	
 	mid_x = mid_x+(-(cos(angleRad) * hyp));
 	mid_y = mid_y+(sin(angleRad) * hyp);
 	x1_pos = mid_x;
@@ -179,8 +185,8 @@ void updatePos(double hyp){
 */
 void angleCheck(){
 	//Saves the last position
-	last_x = mid_x;
-	last_y = mid_y;
+	//last_x = mid_x;
+	//6last_y = mid_y;
 	
 	//Calculates the new position of the platform
 	calcMidPos();
@@ -188,26 +194,22 @@ void angleCheck(){
 	//Calculates the X/Y-difference of the platform and the object
 	deltaX = mid_x - last_x;
 	deltaY = mid_y - last_y;
-	
 	//Calculates the angle to the object from the platform
 	angleRad = atan2(deltaY,deltaX);
 	angleTemp = (angleRad*180)/PI;
 	angleTemp = 180 - angleTemp;
-	
 	//If the angle-difference of the current travel-angle and the angle to the object is bigger than 4
 	//then fix the positioning so that the angle is equal.
-	if (abs(angleTemp-currentAngle)>4)
+	if (angleTemp!=currentAngle)
 	{
+		printf("Fixing angle\n");
 		//Stops the movement
 		stop();
 		//Sets currentAngle to the actual angle of the platform
 		currentAngle = angleTemp;
-		
 		//Rotates the platform the needed amount in the correct direction.
 		rotationChooser(angleToPos());
-		
 	}
-	
 }
 
 /*
@@ -218,15 +220,15 @@ void rotationChooser(int degreesToPos){
 	if (degreesToPos<0){
 		degreesToPos = abs(degreesToPos);
 		//Rotates the platform clockwise by the input value
-		rotateRightByDegrees(degreesToPos);
-		//rotateRight(degreesToPos);
+		//rotateRightByDegrees(degreesToPos);
+		rotateRight(degreesToPos);
 		//Update the angle
 		updateAngle();
 	} else{
 		//Makes the value into a positive value
 		//Rotates the platform anti-clockwise by the input value
-		rotateLeftByDegrees(degreesToPos);
-		//rotateLeft(degreesToPos);
+		//rotateLeftByDegrees(degreesToPos);
+		rotateLeft(degreesToPos);
 		//Update the angle
 		updateAngle();
 	}

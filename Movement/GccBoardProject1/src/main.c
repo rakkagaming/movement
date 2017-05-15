@@ -42,34 +42,43 @@ int main (void)
 	//	DO NOT go: forwardDrive into reverseDrive	
 	//	This is to ensure that the motors don't get damaged.
 	
-	double fool = distanceToPosition(0);
-	int angleValue = angleToPos();
-	printf("angleValue111: %d\n",angleValue);
-	
 	uint8_t foo = 0;
 	int degreesToPos;
 	double tempVariabel = 0;
+	double totalLength = 0;
+	double someVal=0;
+	while (1)
+	{
+		//forwardDrive(100);
+		//delay_ms(3000);
+		reverseDrive(100);
+		delay_ms(3000);
+	}
+	/*
 	while(foo<4){
 		
 		valuesCalc(foo);
 		degreesToPos = angleToPos();
 		rotationChooser(degreesToPos);
-		double testVer = distanceToPosition(foo);
-		while (testVer>30.0){
-			//printf("distance: %d\n", testVer);
+		someVal = totalLength = distanceToPosition(foo);
+		while (someVal>60.0){
+			printf("distance left: %d\n",(int)someVal);
+			if (someVal<(totalLength/2)){
+				angleCheck();
+				totalLength = 0;
+			}
 			delay_ms(500);
 			int ek = counterA-counterB;
 			tempVariabel = counterA*1.355;
 			reglerahjul3(ek);
 			updatePos(tempVariabel);
 			tempVariabel = 0;
-			testVer = distanceToPosition(foo);
-			
+			someVal = distanceToPosition(foo);
+			delay_ms(8);
 		}
-		delay_ms(8);
 		foo++;
 		stop();
-	} 
+	} */
 	
 	return 0;
 }

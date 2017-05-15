@@ -66,14 +66,28 @@ void turnRight(){
 	delay_ms(timeOut);
 }
 
+void rotateRight(int degree){
+	while(degree>45)
+	{
+		degree = degree-45;
+		rotateRightByDegrees(45);
+	}
+	rotateRightByDegrees(degree);
+}
+
 void rotateRightByDegrees(int degree){
 	stop();
 	degree=degree*1.1;
 	degree=(degree/4)-1;
+	degree = max(degree,0);
+	if (degree>0)
+	{
+		
+		pulse(reverseBaseSpeed);
+		delay_us(motorSwitch);
+		pulse(baseSpeedLeft);
+	}
 	
-	pulse(reverseBaseSpeed);
-	delay_us(motorSwitch);
-	pulse(baseSpeedLeft);
 	
 	counterA = 0;
 	counterB = 0;
@@ -87,16 +101,27 @@ void rotateRightByDegrees(int degree){
 	counterB = 0;
 }
 
+void rotateLeft(int degree){
+	while(degree>45)
+	{
+		degree = degree-45;
+		rotateLeftByDegrees(45);
+	}
+	rotateLeftByDegrees(degree);
+}
 void rotateLeftByDegrees(int degree){
 	
 	stop();
 	degree = degree*1.05;
 	degree=(degree/4)-1;
 	
-	pulse(baseSpeed);
-	delay_us(motorSwitch);
-	pulse(reverseBaseSpeed);
-	
+	degree = max(degree,0);
+	if (degree>0)
+	{
+		pulse(baseSpeed);
+		delay_us(motorSwitch);
+		pulse(reverseBaseSpeed);
+	}
 	counterA = 0;
 	counterB = 0;
 	
