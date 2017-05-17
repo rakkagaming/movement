@@ -132,7 +132,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h \
  ../src/config/conf_board.h ../src/motorFunc.h ../src/distanceSensor.h \
  ../src/pulseCounterHandler.h ../src/buttonInterrupt.h \
- ../src/Hjulreglering.h ../src/navigation.h \
+ ../src/navigation.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h
 
 ../src/asf.h:
@@ -416,8 +416,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 ../src/pulseCounterHandler.h:
 
 ../src/buttonInterrupt.h:
-
-../src/Hjulreglering.h:
 
 ../src/navigation.h:
 

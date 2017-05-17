@@ -533,12 +533,6 @@
     <Compile Include="src\distanceSensor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Hjulreglering.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Hjulreglering.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\motorFunc.h">
       <SubType>compile</SubType>
     </Compile>

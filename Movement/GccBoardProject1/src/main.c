@@ -26,6 +26,7 @@ int main (void)
 	//Makes pin 24 on the Due-board an output
 	ioport_set_pin_dir(pin24,IOPORT_DIR_OUTPUT);
 	
+	ioport_set_pin_dir(PIO_PD1_IDX,IOPORT_DIR_OUTPUT);
 	
 	ioport_set_pin_dir(trig,IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(echo, IOPORT_DIR_INPUT);
@@ -47,13 +48,6 @@ int main (void)
 	double tempVariabel = 0;
 	double totalLength = 0;
 	double someVal=0;
-	while (1)
-	{
-		//forwardDrive(100);
-		//delay_ms(3000);
-		reverseDrive(100);
-		delay_ms(3000);
-	}
 	/*
 	while(foo<4){
 		
@@ -79,6 +73,9 @@ int main (void)
 		foo++;
 		stop();
 	} */
+	delay_ms(2000);
+	forwardDrive(50);
+	delay_ms(3000);
 	
 	return 0;
 }

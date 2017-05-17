@@ -5,46 +5,78 @@
  *  Author: Robin Johnsson
  *
  *
- *	Alot of these will be changed when integrated with RTOS.
- *	The delays etc will be removed since RTOS will call functions correctly
- *
+ *	File containing motor related functions
  */ 
 #include <asf.h>
 #include "motorFunc.h"
 #include "pulseCounterHandler.h"
 
-//Sends the pulse to the engine
+double distanceToMove;
+double kP = 1;
+uint16_t bS= baseSpeed;
+uint16_t bSL= baseSpeedLeft;
+
+/*
+	Sends a pulse on the designated pin that varies
+	with the "motorSpeed" input
+*/
 void pulse(uint16_t motorSpeed){
 	ioport_set_pin_level(pin24, HIGH);
 	delay_us(motorSpeed);
 	ioport_set_pin_level(pin24, LOW);
 };
 
-//Sets both engines to go the same direction with the "same" speed
-void forwardDrive(){
-	pulse(baseSpeed);
+/*
+	Sets both motors to forward direction until the desired
+	distance has been covered
+*/
+void forwardDrive(int distance){
+	stop();
+	distanceToMove = distance/1.355;
+	counterA = 0;
+	counterB = 0;
+	
+	delay_ms(8);
+	pulse(1600);
 	delay_us(motorSwitch);
-	pulse(baseSpeedLeft);
-	delay_ms(100);
+	pulse(1560);
+	
+	while (counterA<distanceToMove)
+	{
+		delay_ms(1);
+	}
+	stop();
+	counterA = 0;
+	counterB = 0;
 }
 
-//Sets both engines to go the same direction with the "same" speed (reverse)
-void reverseDrive(){
+/*
+	Sets both motors to backwards direction until the desired
+	distance has been covered
+*/
+void reverseDrive(int distance){
+	stop();
+	distanceToMove = distance/1.355;
+	counterA = 0;
+	counterB = 0;
+	
 	pulse(reverseBaseSpeed);
 	delay_us(motorSwitch);
 	pulse(reverseBaseSpeed);
-	delay_ms(timeOut);
+	
+	while (counterA<distanceToMove)
+	{
+		delay_ms(1);
+	}
+	
+	stop();
+	counterA = 0;
+	counterB = 0;
 }
 
-//Rotates the platform by setting the directions of the engines the opposite of each other
-void rotate(){
-	pulse(baseSpeed);
-	delay_us(motorSwitch);
-	pulse(reverseBaseSpeed);
-	delay_ms(timeOut);
-}
-
-//Stops both of the engines
+/*
+	Stops both of the motors
+*/
 void stop(){
 	pulse(1500);
 	delay_us(motorSwitch);
@@ -52,20 +84,10 @@ void stop(){
 	delay_ms(timeOut);
 }
 
-void turnLeft(){
-	pulse(baseSpeed);
-	delay_us(motorSwitch);
-	pulse(baseSpeed+100);
-	delay_ms(timeOut);
-}
-
-void turnRight(){
-	pulse(baseSpeed+100);
-	delay_us(motorSwitch);
-	pulse(baseSpeed);
-	delay_ms(timeOut);
-}
-
+/*
+	Splits up the rotation into segments of a maximum of 
+	45 degrees at a time
+*/
 void rotateRight(int degree){
 	while(degree>45)
 	{
@@ -75,6 +97,10 @@ void rotateRight(int degree){
 	rotateRightByDegrees(degree);
 }
 
+/*
+	Rotates the platform to the right (clockwise) for
+	desired amount of degrees
+*/
 void rotateRightByDegrees(int degree){
 	stop();
 	degree=degree*1.1;
@@ -101,6 +127,10 @@ void rotateRightByDegrees(int degree){
 	counterB = 0;
 }
 
+/*
+	Splits up the rotation into segments of a maximum of 
+	45 degrees at a time
+*/
 void rotateLeft(int degree){
 	while(degree>45)
 	{
@@ -109,6 +139,11 @@ void rotateLeft(int degree){
 	}
 	rotateLeftByDegrees(degree);
 }
+
+/*
+	Rotates the platform to the left (anti-clockwise) for
+	desired amount of degrees
+*/
 void rotateLeftByDegrees(int degree){
 	
 	stop();
@@ -131,4 +166,23 @@ void rotateLeftByDegrees(int degree){
 	stop();
 	counterA = 0;
 	counterB = 0;
+}
+
+/*
+	Controls the two motors so that they keep the same speed
+	This is done by checking the difference of the two counters
+	on the wheels, and then adding the difference to the left
+	wheel.
+*/
+void wheelControl(int ek){
+	//Resets the counters
+	counterA = 0;
+	counterB = 0;
+	
+	//Updates the left wheels speed
+	bSL = bSL+(ek*kP);
+	
+	pulse(bS);
+	delay_us(motorSwitch);
+	pulse(bSL);
 }

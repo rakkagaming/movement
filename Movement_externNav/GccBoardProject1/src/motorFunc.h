@@ -19,24 +19,65 @@
 
 #define reverseBaseSpeed 1280
 #define motorSwitch 1100
-#define timeOut 600
+#define timeOut 200
 
 
 
 #include <inttypes.h>
 
+/*
+	Sends a pulse on the designated pin that varies
+	with the "motorSpeed" input
+*/
 void pulse(uint16_t motorSpeed);
-void forwardDrive(void);
-void reverseDrive(void);
-void rotate(void);
+
+/*
+	Sets both motors to forward direction until the desired
+	distance has been covered
+*/
+void forwardDrive(int distance);
+
+/*
+	Sets both motors to backwards direction until the desired
+	distance has been covered
+*/
+void reverseDrive(int distance);
+
+/*
+	Stops both of the motors
+*/
 void stop(void);
-void turnLeft(void);
-void turnRight(void);
+/*
+	Rotates the platform to the left (anti-clockwise) for
+	desired amount of degrees
+*/
 void rotateLeftByDegrees(int degree);
+
+/*
+	Rotates the platform to the right (clockwise) for
+	desired amount of degrees
+*/
 void rotateRightByDegrees(int degree);
+
+/*
+	Splits up the rotation into segments of a maximum of 
+	45 degrees at a time
+*/
 void rotateRight(int degree);
+
+/*
+	Splits up the rotation into segments of a maximum of 
+	45 degrees at a time
+*/
 void rotateLeft(int degree);
 
+/*
+	Controls the two motors so that they keep the same speed
+	This is done by checking the difference of the two counters
+	on the wheels, and then adding the difference to the left
+	wheel.
+*/
+void wheelControl(int ek);
 
 
 #endif /* MOTORFUNC_H_ */

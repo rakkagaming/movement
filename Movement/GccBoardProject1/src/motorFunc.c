@@ -29,9 +29,10 @@ void forwardDrive(int distance){
 	counterA = 0;
 	counterB = 0;
 	
-	pulse(baseSpeed);
+	delay_ms(8);
+	pulse(1600);
 	delay_us(motorSwitch);
-	pulse(baseSpeedLeft);
+	pulse(1560);
 	
 	while (counterA<distanceToMove)
 	{
@@ -43,7 +44,6 @@ void forwardDrive(int distance){
 }
 
 //Sets both engines to go the same direction with the "same" speed (reverse)
-//@Depricated
 void reverseDrive(int distance){
 	stop();
 	distanceToMove = distance/1.355;
@@ -106,7 +106,7 @@ void rotateRight(int degree){
 	}
 	if (degree<8)
 	{
-		degree += (8-degree);
+		rotateLeft(360-degree);
 	}
 	printf("degrees to turn the final time: %d\n",degree);
 	rotateRightByDegrees(degree);
@@ -149,7 +149,7 @@ void rotateLeft(int degree){
 	
 	if (degree<8)
 	{
-		degree += (8-degree);
+		rotateRight(360-degree);
 	}
 	printf("degrees to turn the final time: %d\n",degree);
 	rotateLeftByDegrees(degree);

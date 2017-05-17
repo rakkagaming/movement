@@ -11,12 +11,9 @@
 #include "distanceSensor.h"
 #include "pulseCounterHandler.h"
 #include "buttonInterrupt.h"
-#include "Hjulreglering.h"
 #include "navigation.h"
 
-
-
-//Cancer from Gustaf
+//Variables for the coordinates
 uint8_t c_counter = 0;
 char rx[16];
 
@@ -145,7 +142,7 @@ int main (void)
 			}
 			delay_ms(500);
 			int ek = counterA-counterB;
-			reglerahjul3(ek);
+			wheelControl(ek);
 			x1_pos = x_coordinate();
 			y1_pos = y_coordinate();
 		}

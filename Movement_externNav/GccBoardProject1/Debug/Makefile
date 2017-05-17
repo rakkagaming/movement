@@ -100,7 +100,6 @@ C_SRCS +=  \
 ../src/ASF/sam/drivers/usart/usart.c \
 ../src/buttonInterrupt.c \
 ../src/distanceSensor.c \
-../src/Hjulreglering.c \
 ../src/navigation.c \
 ../src/pulseCounterHandler.c \
 ../src/ASF/common/services/clock/sam3x/sysclk.c \
@@ -134,7 +133,6 @@ src/ASF/sam/drivers/uart/uart.o \
 src/ASF/sam/drivers/usart/usart.o \
 src/buttonInterrupt.o \
 src/distanceSensor.o \
-src/Hjulreglering.o \
 src/navigation.o \
 src/pulseCounterHandler.o \
 src/ASF/common/services/clock/sam3x/sysclk.o \
@@ -161,7 +159,6 @@ src/ASF/sam/drivers/uart/uart.o \
 src/ASF/sam/drivers/usart/usart.o \
 src/buttonInterrupt.o \
 src/distanceSensor.o \
-src/Hjulreglering.o \
 src/navigation.o \
 src/pulseCounterHandler.o \
 src/ASF/common/services/clock/sam3x/sysclk.o \
@@ -188,7 +185,6 @@ src/ASF/sam/drivers/uart/uart.d \
 src/ASF/sam/drivers/usart/usart.d \
 src/buttonInterrupt.d \
 src/distanceSensor.d \
-src/Hjulreglering.d \
 src/navigation.d \
 src/pulseCounterHandler.d \
 src/ASF/common/services/clock/sam3x/sysclk.d \
@@ -215,7 +211,6 @@ src/ASF/sam/drivers/uart/uart.d \
 src/ASF/sam/drivers/usart/usart.d \
 src/buttonInterrupt.d \
 src/distanceSensor.d \
-src/Hjulreglering.d \
 src/navigation.d \
 src/pulseCounterHandler.d \
 src/ASF/common/services/clock/sam3x/sysclk.d \
@@ -249,8 +244,6 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
-
-
 
 
 
