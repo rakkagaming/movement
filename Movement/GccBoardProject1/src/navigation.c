@@ -8,7 +8,6 @@
  *	The functions use angles, positions and distances to calculate what should be done.
  *
  *	@TODO	Clean up code, remove variables that aren't needed or those that are just duplicates
- *			Also move variables to the .h file?
  */ 
 #include "navigation.h"
 
@@ -20,17 +19,28 @@ uint16_t x2_pos = 0;
 uint16_t y2_pos = 0;
 
 //Can be removed?
+double tempVariabel;
 uint8_t data[8];
 uint8_t temp;
 
 
 double distanceLeft;
-
+int degreesToPos;
 static int currentAngle = 90;
+double totalLength = 0;
+int radius = 80;
+
+uint8_t status = 0;
+uint8_t objIndex = 0;
+uint8_t getAllObj = 0;
+Bool suspendNav = 0;
+uint8_t travelPath[8];
+
 
 //Calculation variables
 int deltaX;
 int deltaY;
+int ek;
 
 //Different angle variables
 int angle;
@@ -53,10 +63,11 @@ static uint16_t mid_y;
 typedef struct {
 	uint16_t x_pos;
 	uint16_t y_pos;
-	const char *name_p;
+	uint8_t name;
 	} object_pos_t;
 
 //Array of objects
+/*
 object_pos_t objects[] = {
 	{
 		.x_pos = sock_x,
@@ -78,7 +89,45 @@ object_pos_t objects[] = {
 		.y_pos = dropOff_y,
 		.name_p = "Drop off"
 	}
-};
+};*/
+object_pos_t objects[8];
+
+void setObject(Object obj, uint16_t x, uint16_t y){
+	switch(obj){
+		case SOCK:
+		objects[2].x_pos = x;
+		objects[2].y_pos = y;
+		objects[2].name = obj;
+		break;
+		case SQUARE:
+		objects[3].x_pos = x;
+		objects[3].y_pos = y;
+		objects[3].name = obj;
+		break;
+		case GLASS:
+		objects[4].x_pos = x;
+		objects[4].y_pos = y;
+		objects[4].name = obj;
+		break;
+		default:
+		break;
+	}
+	objects[0].x_pos  = 50;
+	objects[0].y_pos = 0;
+	objects[0].name = 0;
+}
+
+void setCollectAll(uint8_t getAll){
+	getAllObj = getAll;
+}
+
+void setDonePickup(){
+	suspendNav = false;
+}
+
+void setDropoffDone(){
+	suspendNav = false;
+}
 
 void initNav(){
 	currentAngle = 90;
@@ -232,4 +281,71 @@ void rotationChooser(int degreesToPos){
 		//Update the angle
 		updateAngle();
 	}
+	
+	
+}
+
+void setPath(){
+	if (getAllObj){
+		travelPath[0] = SQUARE;
+		travelPath[1] = SOCK;
+		travelPath[2] = GLASS;
+		travelPath[3] = 0;
+		printf(" %d %d %d %d", travelPath[0],travelPath[1],travelPath[2],travelPath[3]);
+	} 
+	else{
+		travelPath[0] = SQUARE;
+		travelPath[1] = 0;
+		travelPath[2] = SOCK;
+		travelPath[3] = 0;
+		travelPath[4] = GLASS;
+		travelPath[5] = 0;
+		printf(" %d %d %d %d %d %d\n", travelPath[0],travelPath[1],travelPath[2],travelPath[3],travelPath[4],travelPath[5]);
+	}
+}
+
+//kollar om framme
+//om framme, returnera 1/2 beroende på om det är obj eller dropoff
+//0 innebär inte framme(kör fortfarande)
+uint8_t goToNext(){
+	if (!travelPath[0]){
+		//printf("path: ");
+		setPath();
+		objIndex = 0;
+		status = 6;
+	}
+	if (status){
+		valuesCalc(travelPath[objIndex]);
+		degreesToPos = angleToPos();
+		rotationChooser(degreesToPos);
+		totalLength = distanceToPosition(travelPath[objIndex]);
+		status = 0;
+		//printf("I am here\n");
+	}
+	//printf("distance left: %d\n",(int)distanceToPosition(travelPath[objIndex]) );
+	if (distanceToPosition(travelPath[objIndex])>radius){
+		if (distanceToPosition(travelPath[objIndex])<(totalLength/2)){
+			angleCheck();
+			totalLength = 0;
+		}
+		ek = counterA - counterB;
+		tempVariabel = counterA*1.355;
+		reglerahjul3(ek);
+		//Hämta nya koordinater
+		updatePos(tempVariabel);
+		tempVariabel = 0;
+		status = 0;
+		//printf("driving\n");
+		return status;
+	}
+	if (travelPath[objIndex]){
+		suspendNav = true;
+		status = 1;
+		objIndex++;
+		return status;
+	}
+	suspendNav = true;
+	status = 2;
+	objIndex++;
+	return status;
 }

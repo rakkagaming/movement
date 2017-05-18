@@ -100,15 +100,15 @@ void turnRight(){
 void rotateRight(int degree){
 	while(degree>45)
 	{
-		printf("degrees left: %d\n",degree);
+		//printf("degrees left: %d\n",degree);
 		degree = degree-45;
 		rotateRightByDegrees(45);
 	}
 	if (degree<8)
 	{
-		rotateLeft(360-degree);
+		degree = degree+(8-degree);
 	}
-	printf("degrees to turn the final time: %d\n",degree);
+	//printf("degrees to turn the final time: %d\n",degree);
 	rotateRightByDegrees(degree);
 }
 
@@ -142,16 +142,16 @@ void rotateRightByDegrees(int degree){
 void rotateLeft(int degree){
 	while(degree>45)
 	{
-		printf("degrees left: %d\n",degree);
+		//printf("degrees left: %d\n",degree);
 		degree = degree-45;
 		rotateLeftByDegrees(45);
 	}
 	
 	if (degree<8)
 	{
-		rotateRight(360-degree);
+		degree = degree+(8-degree);
 	}
-	printf("degrees to turn the final time: %d\n",degree);
+	//printf("degrees to turn the final time: %d\n",degree);
 	rotateLeftByDegrees(degree);
 }
 

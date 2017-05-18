@@ -139,7 +139,7 @@ test/navigationTest.d test/navigationTest.o: ../test/navigationTest.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\limits.h \
  ../src/navigation.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h \
- ../src/motorFunc.h
+ ../src/motorFunc.h ../src/pulseCounterHandler.h ../src/Hjulreglering.h
 
 ../src/asf.h:
 
@@ -434,3 +434,7 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h:
 
 ../src/motorFunc.h:
+
+../src/pulseCounterHandler.h:
+
+../src/Hjulreglering.h:

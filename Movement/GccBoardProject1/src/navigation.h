@@ -12,6 +12,8 @@
 #include <math.h>
 #include <stdio_serial.h>
 #include "motorFunc.h"
+#include "pulseCounterHandler.h"
+#include "Hjulreglering.h"
 
 #define sock_x 136
 #define sock_y 200
@@ -23,8 +25,22 @@
 #define dropOff_y 350
 #define PI 3.141592
 
+//Temporary
+typedef enum _object_t {
+	SOCK = 2,
+	SQUARE = 3,
+	GLASS = 4
+} Object;
+
 extern uint16_t x1_pos;
 extern uint16_t y1_pos;
+
+void setObject(Object obj,uint16_t x, uint16_t y);
+void setCollectAll(uint8_t getAll);
+void setDonePickup(void);
+void setDropoffDone(void);
+uint8_t goToNext();
+void setPath(void);
 
 void initNav(void);
 void callForData(uint16_t,uint16_t);

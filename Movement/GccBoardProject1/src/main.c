@@ -73,9 +73,14 @@ int main (void)
 		foo++;
 		stop();
 	} */
-	delay_ms(2000);
-	forwardDrive(50);
-	delay_ms(3000);
-	
+	setObject(SQUARE,100,300);
+	setObject(SOCK, 300, 300);
+	setObject(GLASS, 300, 100);
+	setCollectAll(0);
+	while (1)
+	{
+		goToNext();
+		delay_ms(500);
+	}
 	return 0;
 }
