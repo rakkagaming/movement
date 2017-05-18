@@ -34,7 +34,14 @@ typedef enum _object_t {
 extern uint16_t x1_pos;
 extern uint16_t y1_pos;
 
+/*
+	Sets the correct objects with their coordinates
+*/
 void setObject(Object obj,uint16_t x, uint16_t y);
+
+/*
+	Decides if the arm can pick up all objects before dropoff, or if it needs to take one at a time
+*/
 void setCollectAll(uint8_t getAll);
 void setDonePickup(void);
 void setDropoffDone(void);

@@ -92,6 +92,9 @@ object_pos_t objects[] = {
 };*/
 object_pos_t objects[8];
 
+/*
+	Sets the correct objects with their coordinates
+*/
 void setObject(Object obj, uint16_t x, uint16_t y){
 	switch(obj){
 		case SOCK:
@@ -117,18 +120,32 @@ void setObject(Object obj, uint16_t x, uint16_t y){
 	objects[0].name = 0;
 }
 
+/*
+	Decides if the arm can pick up all objects before dropoff, or if it needs to take one at a time
+*/
 void setCollectAll(uint8_t getAll){
 	getAllObj = getAll;
 }
 
+/*
+	Sets a suspension variable to false
+	done after a pickup
+*/
 void setDonePickup(){
 	suspendNav = false;
 }
 
+/*
+	Sets a suspension variable to false
+	done after a dropoff
+*/
 void setDropoffDone(){
 	suspendNav = false;
 }
 
+/*
+	Only used for unitTesting, can be deleted
+*/
 void initNav(){
 	currentAngle = 90;
 	x1_pos = 0;
@@ -304,9 +321,14 @@ void setPath(){
 	}
 }
 
-//kollar om framme
-//om framme, returnera 1/2 beroende på om det är obj eller dropoff
-//0 innebär inte framme(kör fortfarande)
+/*
+	Runs EVERYTHING that has to do with navigation.
+	Decides on a travel path if none is existent
+	Turns the platform towards its destination
+	Moves the platform towards the destination
+	Stops when has approached the destination
+	Repeats until all destinations has been reached
+*/
 uint8_t goToNext(){
 	if (!travelPath[0]){
 		//printf("path: ");
@@ -320,9 +342,7 @@ uint8_t goToNext(){
 		rotationChooser(degreesToPos);
 		totalLength = distanceToPosition(travelPath[objIndex]);
 		status = 0;
-		//printf("I am here\n");
 	}
-	//printf("distance left: %d\n",(int)distanceToPosition(travelPath[objIndex]) );
 	if (distanceToPosition(travelPath[objIndex])>radius){
 		if (distanceToPosition(travelPath[objIndex])<(totalLength/2)){
 			angleCheck();
@@ -331,11 +351,9 @@ uint8_t goToNext(){
 		ek = counterA - counterB;
 		tempVariabel = counterA*1.355;
 		wheelControl(ek);
-		//Hämta nya koordinater
 		updatePos(tempVariabel);
 		tempVariabel = 0;
 		status = 0;
-		//printf("driving\n");
 		return status;
 	}
 	if (travelPath[objIndex]){
