@@ -330,7 +330,7 @@ uint8_t goToNext(){
 		}
 		ek = counterA - counterB;
 		tempVariabel = counterA*1.355;
-		reglerahjul3(ek);
+		wheelControl(ek);
 		//Hämta nya koordinater
 		updatePos(tempVariabel);
 		tempVariabel = 0;

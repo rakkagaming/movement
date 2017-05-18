@@ -131,7 +131,7 @@ src/navigation.d src/navigation.o: ../src/navigation.c \
  ../src/ASF/common/services/ioport/ioport.h \
  ../src/ASF/common/services/ioport/sam/ioport_pio.h \
  ../src/ASF/sam/drivers/pmc/sleep.h ../src/ASF/sam/drivers/tc/tc.h \
- ../src/ASF/sam/drivers/pio/pio_handler.h ../src/Hjulreglering.h
+ ../src/ASF/sam/drivers/pio/pio_handler.h
 
 ../src/navigation.h:
 
@@ -412,5 +412,3 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 ../src/ASF/sam/drivers/tc/tc.h:
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
-
-../src/Hjulreglering.h:

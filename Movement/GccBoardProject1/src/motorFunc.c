@@ -14,6 +14,9 @@
 #include "pulseCounterHandler.h"
 
 double distanceToMove;
+double kP = 1;
+uint16_t bS= baseSpeed;
+uint16_t bSL= baseSpeedLeft;
 
 //Sends the pulse to the engine
 void pulse(uint16_t motorSpeed){
@@ -178,4 +181,13 @@ void rotateLeftByDegrees(int degree){
 	stop();
 	counterA = 0;
 	counterB = 0;
+}
+
+void wheelControl(int ek){
+	counterA = 0; //Nollställer räknarna
+	counterB = 0;
+	bSL = bSL+(ek*kP);
+	pulse(bS);
+	delay_us(motorSwitch);
+	pulse(bSL);
 }

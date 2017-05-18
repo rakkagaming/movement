@@ -36,6 +36,7 @@ void rotateLeftByDegrees(int degree);
 void rotateRightByDegrees(int degree);
 void rotateRight(int degree);
 void rotateLeft(int degree);
+void wheelControl(int ek);
 
 
 

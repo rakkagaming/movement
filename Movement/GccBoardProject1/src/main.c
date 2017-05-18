@@ -12,7 +12,6 @@
 #include "distanceSensor.h"
 #include "pulseCounterHandler.h"
 #include "buttonInterrupt.h"
-#include "Hjulreglering.h"
 #include "navigation.h"
 
 

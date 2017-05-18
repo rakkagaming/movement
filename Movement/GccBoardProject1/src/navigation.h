@@ -13,7 +13,6 @@
 #include <stdio_serial.h>
 #include "motorFunc.h"
 #include "pulseCounterHandler.h"
-#include "Hjulreglering.h"
 
 #define sock_x 136
 #define sock_y 200
